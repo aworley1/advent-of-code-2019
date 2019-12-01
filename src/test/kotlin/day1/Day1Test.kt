@@ -15,8 +15,16 @@ object Day1Test : Spek({
             assertThat(calculateFuel(14)).isEqualTo(2)
         }
 
+        it("should not include negative fuel requirements") {
+            assertThat(calculateFuel(2)).isEqualTo(0)
+        }
+
+        it("should add extra fuel for the extra fuel (and extra fuel for that extra fuel") {
+            assertThat(calculateFuel(1969)).isEqualTo(966)
+        }
+
         it("should read input from a file and add results together") {
-            assertThat(run("inputs/test/day1.txt")).isEqualTo("34237")
+            assertThat(run("inputs/test/day1.txt")).isEqualTo("51312")
         }
     }
 })
