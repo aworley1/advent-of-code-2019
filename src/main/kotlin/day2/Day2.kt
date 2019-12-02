@@ -1,5 +1,12 @@
 package day2
 
+import java.io.File
+
+fun main() {
+    val input = File("inputs/day2.txt").readLines().first()
+    println(compute(input))
+}
+
 fun compute(input: String): List<Int> {
     val memory = input.split(",")
         .map { it.toInt() }
