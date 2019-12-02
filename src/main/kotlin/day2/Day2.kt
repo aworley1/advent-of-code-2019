@@ -33,8 +33,8 @@ private fun performOperation(index: Int, memory: MutableList<Int>) {
         else -> throw NotImplementedError("Operation $operationCode not implemented")
     }
 
-    val firstValue = memory[index + 1]
-    val secondValue = memory[index + 2]
+    val firstValue = memory[memory[index + 1]]
+    val secondValue = memory[memory[index + 2]]
     val outLocation = memory[index + 3]
 
     memory[outLocation] = operation(firstValue, secondValue)
