@@ -22,5 +22,21 @@ object Day2Test : Spek({
 
             assertThat(compute(input)).isEqualTo(expectedResult)
         }
+
+        it("should multiply two numbers") {
+            val input = "2,3,4,5,99,0"
+
+            val expectedResult = listOf(2, 3, 4, 5, 99, 12)
+
+            assertThat(compute(input)).isEqualTo(expectedResult)
+        }
+
+        it("should match sample input 1") {
+            val input = "1,1,1,4,99,5,6,0,99"
+
+            val expectedResult = listOf(30, 1, 1, 4, 2, 5, 6, 0, 99)
+
+            assertThat(compute(input)).isEqualTo(expectedResult)
+        }
     }
 })
