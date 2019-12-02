@@ -5,12 +5,23 @@ fun compute(input: String): List<Int> {
         .map { it.toInt() }
         .toMutableList()
 
-    val operation = memory[0]
-    val firstValue = memory[1]
-    val secondValue = memory[2]
-    val outLocation = memory[3]
+    var index = 0
 
-    memory[outLocation] = firstValue + secondValue
+    while(true) {
+        if (memory[index] == 99) break
+        performOperation(index, memory)
+        index += 4
+    }
+
 
     return memory
+}
+
+private fun performOperation(index: Int, memory: MutableList<Int>) {
+    val operation = memory[index]
+    val firstValue = memory[index + 1]
+    val secondValue = memory[index + 2]
+    val outLocation = memory[index + 3]
+
+    memory[outLocation] = firstValue + secondValue
 }
