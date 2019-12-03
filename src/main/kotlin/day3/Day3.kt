@@ -1,7 +1,19 @@
 package day3
 
+import java.io.File
+import java.lang.Math.abs
+
+fun main() {
+    val input = File("inputs/day3.txt").readLines()
+    println(solvePuzzle(input))
+}
+
 fun solvePuzzle(input: List<String>): Int {
-    return 0
+    val coordsForWires = parse(input).map { findCoordsForWire(it) }
+
+    return coordsForWires[0].intersect(coordsForWires[1])
+        .map { it.manhattenDistance() }
+        .min()!!
 }
 
 fun parse(input: List<String>): List<List<Instruction>> {
@@ -32,7 +44,9 @@ fun findCoordsForWire(instructions: List<Instruction>): List<Coord> {
 
 data class Instruction(val operation: Operation, val amount: Int)
 
-data class Coord(val up: Int, val right: Int)
+data class Coord(val up: Int, val right: Int) {
+    fun manhattenDistance() = abs(up) + abs(right)
+}
 
 enum class Operation(val op: (Coord, Int) -> List<Coord>) {
     U(addToCoord { coord, i -> coord.copy(up = coord.up + i) }),
