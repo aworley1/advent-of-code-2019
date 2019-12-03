@@ -5,7 +5,8 @@ import java.lang.Math.abs
 
 fun main() {
     val input = File("inputs/day3.txt").readLines()
-    println(solvePuzzle(input))
+    println("Part1: ${solvePuzzle(input)}")
+    println("Part2: ${solvePuzzlePart2(input)}")
 }
 
 fun solvePuzzle(input: List<String>): Int {
@@ -13,6 +14,14 @@ fun solvePuzzle(input: List<String>): Int {
 
     return coordsForWires[0].intersect(coordsForWires[1])
         .map { it.manhattenDistance() }
+        .min()!!
+}
+
+fun solvePuzzlePart2(input: List<String>): Int {
+    val coordsForWires = parse(input).map { findCoordsForWire(it) }
+    val intersections = coordsForWires[0].intersect(coordsForWires[1])
+
+    return intersections.map { coordsForWires[0].indexOf(it) + coordsForWires[1].indexOf(it) + 2 }
         .min()!!
 }
 
