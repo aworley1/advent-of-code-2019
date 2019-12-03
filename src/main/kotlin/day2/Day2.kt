@@ -7,10 +7,8 @@ fun main() {
     println(compute(input))
 }
 
-fun compute(input: String): List<Int> {
-    val memory = input.split(",")
-        .map { it.toInt() }
-        .toMutableList()
+fun compute(input: List<Int>): List<Int> {
+    val memory = input.toMutableList()
 
     var index = 0
 
@@ -22,6 +20,13 @@ fun compute(input: String): List<Int> {
 
 
     return memory
+}
+
+fun compute(input: String): List<Int> {
+    val program = input.split(",")
+        .map { it.toInt() }
+
+    return compute(program)
 }
 
 private fun performOperation(index: Int, memory: MutableList<Int>) {
