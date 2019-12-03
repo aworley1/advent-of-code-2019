@@ -19,6 +19,32 @@ object Day3Test : Spek({
             assertThat(parse(input)).isEqualTo(expectedResult)
         }
     }
+
+    describe("coord finder") {
+        it("should find coords for a list of instructions") {
+            val instructions = listOf(
+                Instruction(U, 2),
+                Instruction(R, 3),
+                Instruction(D, 2),
+                Instruction(L, 1)
+            )
+
+            val expectedCoords = listOf(
+                Coord(up = 1, right = 0),
+                Coord(up = 2, right = 0),
+                Coord(up = 2, right = 1),
+                Coord(up = 2, right = 2),
+                Coord(up = 2, right = 3),
+                Coord(up = 1, right = 3),
+                Coord(up = 0, right = 3),
+                Coord(up = 0, right = 2)
+            )
+
+            val result = findCoordsForWire(instructions)
+            assertThat(result).isEqualTo(expectedCoords)
+        }
+    }
+
     describe("day3") {
         it("should calculate for test input1") {
             val input = listOf("R75,D30,R83,U83,L12,D49,R71,U7,L72", "U62,R66,U55,R34,D71,R55,D58,R83")
