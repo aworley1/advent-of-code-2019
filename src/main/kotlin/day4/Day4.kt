@@ -52,14 +52,14 @@ fun countRepeatingDigits(password: String): List<Int> {
 
     password.forEachIndexed { index, c ->
         val nextChar =
-            if (index != password.length - 1) {
+            if (index + 1 != password.length) {
                 password[index + 1]
             } else null
 
-        if (c == nextChar)
-            numberOfRepeats++
-        else {
-            numbersOfRepeats.add(numberOfRepeats + 1)
+        numberOfRepeats++
+
+        if (nextChar != c) {
+            numbersOfRepeats.add(numberOfRepeats)
             numberOfRepeats = 0
         }
     }
