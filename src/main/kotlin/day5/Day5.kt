@@ -56,14 +56,14 @@ private fun performOperation(
 }
 
 fun opCode1(index: Int, memory: MutableList<Int>): Int {
-    val added = memory[memory[index + 1]] + memory[memory[index + 2]]
+    val added = memory.readFromMemory(index + 1) + memory.readFromMemory(index + 2)
     memory.writePositionMode(locationOfParameter = index + 3, value = added)
 
     return index + 4
 }
 
 fun opCode2(index: Int, memory: MutableList<Int>): Int {
-    val multiplied = memory[memory[index + 1]] * memory[memory[index + 2]]
+    val multiplied = memory.readFromMemory(index + 1) * memory.readFromMemory(index + 2)
     memory.writePositionMode(locationOfParameter = index + 3, value = multiplied)
 
     return index + 4
@@ -90,4 +90,8 @@ fun createOpCode4(writer: ConsoleWriter): (Int, MutableList<Int>) -> Int {
 
 private fun MutableList<Int>.writePositionMode(locationOfParameter: Int, value: Int) {
     this[this[locationOfParameter]] = value
+}
+
+private fun MutableList<Int>.readFromMemory(locationOfLocationToRead: Int): Int {
+    return this[this[locationOfLocationToRead]]
 }
