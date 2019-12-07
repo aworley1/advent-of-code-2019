@@ -9,10 +9,12 @@ plugins {
 
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 dependencies {
     implementation(kotlin("stdlib-jdk8"))
+    implementation("com.google.guava:guava:28.1-jre")
     testImplementation("org.spekframework.spek2:spek-dsl-jvm:$spek_version")
     testRuntimeOnly ("org.spekframework.spek2:spek-runner-junit5:$spek_version")
     testRuntimeOnly ("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
