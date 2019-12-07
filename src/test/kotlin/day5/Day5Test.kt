@@ -53,5 +53,13 @@ object Day5Test : Spek({
             assertThat(compute(input, consoleReader, consoleWriter)).isEqualTo(expectedResult)
             verify { consoleWriter("17") }
         }
+
+        it("should run a program with parameter mode operations") {
+            val program = "1002,4,3,4,33"
+
+            val expectedResult = listOf(1002,4,3,4,99)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
     }
 })

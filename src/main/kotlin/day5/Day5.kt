@@ -75,16 +75,12 @@ fun createOpCode3(index: Int, inputs: InputsAndWriteLocation, reader: ConsoleRea
 }
 
 fun createOpCode4(index: Int, inputs: InputsAndWriteLocation, writer: ConsoleWriter): (MutableList<Int>) -> Int {
-    return fun(memory: MutableList<Int>): Int {
+    return fun(_: MutableList<Int>): Int {
 
         writer(inputs.inputs[0].toString())
 
         return index + inputs.memoryOccupied
     }
-}
-
-private fun MutableList<Int>.writePositionMode(locationOfParameter: Int, value: Int) {
-    this[this[locationOfParameter]] = value
 }
 
 fun MutableList<Int>.readFromMemory(locationOfLocationToRead: Int): Int {

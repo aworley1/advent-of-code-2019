@@ -15,7 +15,11 @@ fun parseOpCode(
 
     val opCode = wholeOperation.substring(3, 5).toInt()
 
-    val parameterModes = listOf(wholeOperation[2].toInt(), wholeOperation[1].toInt(), wholeOperation[0].toInt())
+    val parameterModes = listOf(
+        wholeOperation.substring(2, 3).toInt(),
+        wholeOperation.substring(1, 2).toInt(),
+        wholeOperation.substring(0, 1).toInt()
+    )
 
     val function = when (opCode) {
         1 -> createOpCode1(index, createInputs(2, true, parameterModes, index, memory))
@@ -35,7 +39,14 @@ private fun createInputs(
     index: Int,
     memory: MutableList<Int>
 ): InputsAndWriteLocation {
-    val inputs = (1..numberOfInputs).map { memory.readFromMemory(index + it) }
+    val inputs = (1..numberOfInputs).map {
+        val parameterMode = parameterModes[it - 1]
+        when (parameterMode) {
+            0 -> memory.readFromMemory(index + it)
+            1 -> memory[index + it]
+            else -> throw IllegalArgumentException("Invalid mode code $parameterMode")
+        }
+    }
     return InputsAndWriteLocation(
         inputs = inputs,
         writeLocation = if (writableParameter) memory[index + numberOfInputs + 1] else null,
