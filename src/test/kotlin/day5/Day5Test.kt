@@ -89,5 +89,19 @@ object Day5Test : Spek({
 
             assertThat(compute(program)).isEqualTo(expectedResult)
         }
+
+        it("opcode 7 should save 1 if param1 < param2") {
+            val program = "1107,300,400,5,99,100"
+            val expectedResult = listOf(1107, 300, 400, 5, 99, 1)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
+
+        it("opcode 7 should save 0 if param1 > param2") {
+            val program = "1107,400,300,5,99,100"
+            val expectedResult = listOf(1107, 400, 300, 5, 99, 0)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
     }
 })
