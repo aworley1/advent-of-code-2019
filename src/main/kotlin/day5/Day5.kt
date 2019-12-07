@@ -42,35 +42,32 @@ private fun performOperation(
     reader: ConsoleReader,
     writer: ConsoleWriter
 ): Int {
-    val operationCode = memory[index]
+    val operation =
+        parseOpCode(index, memory, reader, writer)
 
-    val operation: (Int, MutableList<Int>) -> Int = when (operationCode) {
-        1 -> ::opCode1
-        2 -> ::opCode2
-        3 -> createOpCode3(reader)
-        4 -> createOpCode4(writer)
-        else -> throw NotImplementedError("Operation $operationCode not implemented")
+    return operation.function(memory)
+}
+
+fun createOpCode1(index: Int, inputs: List<Int>): (MutableList<Int>) -> Int {
+    return fun (memory: MutableList<Int>): Int {
+        val added = memory.readFromMemory(index + 1) + memory.readFromMemory(index + 2)
+        memory.writePositionMode(locationOfParameter = index + 3, value = added)
+
+        return index + 4
     }
-
-    return operation(index, memory)
 }
 
-fun opCode1(index: Int, memory: MutableList<Int>): Int {
-    val added = memory.readFromMemory(index + 1) + memory.readFromMemory(index + 2)
-    memory.writePositionMode(locationOfParameter = index + 3, value = added)
+fun createOpCode2(index: Int, inputs: List<Int>): (MutableList<Int>) -> Int {
+    return fun(memory: MutableList<Int>): Int {
+        val multiplied = memory.readFromMemory(index + 1) * memory.readFromMemory(index + 2)
+        memory.writePositionMode(locationOfParameter = index + 3, value = multiplied)
 
-    return index + 4
+        return index + 4
+    }
 }
 
-fun opCode2(index: Int, memory: MutableList<Int>): Int {
-    val multiplied = memory.readFromMemory(index + 1) * memory.readFromMemory(index + 2)
-    memory.writePositionMode(locationOfParameter = index + 3, value = multiplied)
-
-    return index + 4
-}
-
-fun createOpCode3(reader: ConsoleReader): (Int, MutableList<Int>) -> Int {
-    return fun(index: Int, memory: MutableList<Int>): Int {
+fun createOpCode3(index: Int, inputs: List<Int>, reader: ConsoleReader): (MutableList<Int>) -> Int {
+    return fun(memory: MutableList<Int>): Int {
         val input = reader()
 
         memory.writePositionMode(locationOfParameter = index + 1, value = input.toInt())
@@ -79,10 +76,10 @@ fun createOpCode3(reader: ConsoleReader): (Int, MutableList<Int>) -> Int {
     }
 }
 
-fun createOpCode4(writer: ConsoleWriter): (Int, MutableList<Int>) -> Int {
-    return fun(index: Int, memory: MutableList<Int>): Int {
+fun createOpCode4(index: Int, inputs: List<Int>,writer: ConsoleWriter): (MutableList<Int>) -> Int {
+    return fun(memory: MutableList<Int>): Int {
 
-        writer(memory[memory[index + 1]].toString())
+        writer(memory.readFromMemory(index + 1).toString())
 
         return index + 2
     }
