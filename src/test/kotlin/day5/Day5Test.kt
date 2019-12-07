@@ -57,7 +57,21 @@ object Day5Test : Spek({
         it("should run a program with parameter mode operations") {
             val program = "1002,4,3,4,33"
 
-            val expectedResult = listOf(1002,4,3,4,99)
+            val expectedResult = listOf(1002, 4, 3, 4, 99)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
+
+        it("opcode 5 should jump pointer for non-zero") {
+            val program = "1105,1,4,100,99"
+            val expectedResult = listOf(1105, 1, 4, 100, 99)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
+
+        it("opcode 5 should not jump pointer for zero") {
+            val program = "1105,0,4,99"
+            val expectedResult = listOf(1105, 0, 4, 99)
 
             assertThat(compute(program)).isEqualTo(expectedResult)
         }
