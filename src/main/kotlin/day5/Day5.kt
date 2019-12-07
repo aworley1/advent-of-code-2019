@@ -48,40 +48,38 @@ private fun performOperation(
     return operation.function(memory)
 }
 
-fun createOpCode1(index: Int, inputs: List<Int>): (MutableList<Int>) -> Int {
-    return fun (memory: MutableList<Int>): Int {
-        val added = memory.readFromMemory(index + 1) + memory.readFromMemory(index + 2)
-        memory.writePositionMode(locationOfParameter = index + 3, value = added)
-
-        return index + 4
-    }
-}
-
-fun createOpCode2(index: Int, inputs: List<Int>): (MutableList<Int>) -> Int {
+fun createOpCode1(index: Int, inputs: InputsAndWriteLocation): (MutableList<Int>) -> Int {
     return fun(memory: MutableList<Int>): Int {
-        val multiplied = memory.readFromMemory(index + 1) * memory.readFromMemory(index + 2)
-        memory.writePositionMode(locationOfParameter = index + 3, value = multiplied)
+        memory[inputs.writeLocation!!] = inputs.inputs[0] + inputs.inputs[1]
 
-        return index + 4
+        return index + inputs.memoryOccupied
     }
 }
 
-fun createOpCode3(index: Int, inputs: List<Int>, reader: ConsoleReader): (MutableList<Int>) -> Int {
+fun createOpCode2(index: Int, inputs: InputsAndWriteLocation): (MutableList<Int>) -> Int {
+    return fun(memory: MutableList<Int>): Int {
+        memory[inputs.writeLocation!!] = inputs.inputs[0] * inputs.inputs[1]
+
+        return index + inputs.memoryOccupied
+    }
+}
+
+fun createOpCode3(index: Int, inputs: InputsAndWriteLocation, reader: ConsoleReader): (MutableList<Int>) -> Int {
     return fun(memory: MutableList<Int>): Int {
         val input = reader()
 
-        memory.writePositionMode(locationOfParameter = index + 1, value = input.toInt())
+        memory[inputs.writeLocation!!] = input.toInt()
 
-        return index + 2
+        return index + inputs.memoryOccupied
     }
 }
 
-fun createOpCode4(index: Int, inputs: List<Int>,writer: ConsoleWriter): (MutableList<Int>) -> Int {
+fun createOpCode4(index: Int, inputs: InputsAndWriteLocation, writer: ConsoleWriter): (MutableList<Int>) -> Int {
     return fun(memory: MutableList<Int>): Int {
 
-        writer(memory.readFromMemory(index + 1).toString())
+        writer(inputs.inputs[0].toString())
 
-        return index + 2
+        return index + inputs.memoryOccupied
     }
 }
 
@@ -89,6 +87,6 @@ private fun MutableList<Int>.writePositionMode(locationOfParameter: Int, value: 
     this[this[locationOfParameter]] = value
 }
 
-private fun MutableList<Int>.readFromMemory(locationOfLocationToRead: Int): Int {
+fun MutableList<Int>.readFromMemory(locationOfLocationToRead: Int): Int {
     return this[this[locationOfLocationToRead]]
 }
