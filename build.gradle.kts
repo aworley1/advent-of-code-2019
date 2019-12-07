@@ -17,6 +17,8 @@ dependencies {
     testRuntimeOnly ("org.spekframework.spek2:spek-runner-junit5:$spek_version")
     testRuntimeOnly ("org.jetbrains.kotlin:kotlin-reflect:$kotlin_version")
     testImplementation("com.willowtreeapps.assertk:assertk-jvm:0.20")
+    testRuntimeOnly("org.jetbrains.kotlin:kotlin-reflect")
+    testImplementation("io.mockk:mockk:1.9.3")
 }
 
 tasks.withType<KotlinCompile> {
