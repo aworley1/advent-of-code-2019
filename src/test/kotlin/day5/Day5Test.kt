@@ -75,5 +75,19 @@ object Day5Test : Spek({
 
             assertThat(compute(program)).isEqualTo(expectedResult)
         }
+
+        it("opcode 6 should not jump pointer for non-zero") {
+            val program = "1106,1,4,99"
+            val expectedResult = listOf(1106, 1, 4, 99)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
+
+        it("opcode 6 should jump pointer for zero") {
+            val program = "1106,0,4,100,99"
+            val expectedResult = listOf(1106, 0, 4, 100, 99)
+
+            assertThat(compute(program)).isEqualTo(expectedResult)
+        }
     }
 })

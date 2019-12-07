@@ -27,6 +27,7 @@ fun parseOpCode(
         3 -> createOpCode3(index, createInputs(0, true, parameterModes, index, memory), reader)
         4 -> createOpCode4(index, createInputs(1, false, parameterModes, index, memory), writer)
         5 -> createOpCode5(index, createInputs(2, false, parameterModes, index, memory))
+        6 -> createOpCode6(index, createInputs(2, false, parameterModes, index, memory))
         else -> throw NotImplementedError("Operation $wholeOperation not implemented")
     }
 

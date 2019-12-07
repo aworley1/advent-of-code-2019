@@ -43,3 +43,12 @@ fun createOpCode5(index: Int, inputs: InputsAndWriteLocation): (MutableList<Int>
             inputs.inputs[1]
     }
 }
+
+fun createOpCode6(index: Int, inputs: InputsAndWriteLocation): (MutableList<Int>) -> Int {
+    return fun(_: MutableList<Int>): Int {
+        return if (inputs.inputs[0] != 0)
+            index + inputs.memoryOccupied
+        else
+            inputs.inputs[1]
+    }
+}
