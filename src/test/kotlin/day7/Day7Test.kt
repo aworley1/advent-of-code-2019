@@ -43,9 +43,9 @@ object Day7Test : Spek({
         }
 
         it("should perform opcode 3 and 4 instruction") {
-            val consoleReader = mockk<Inputter>()
+            val consoleReader = mockk<SimpleInputter>()
             every { consoleReader.getInput() } returns 17
-            val consoleWriter = mockk<Outputter>(relaxed = true)
+            val consoleWriter = mockk<SimpleOutputter>(relaxed = true)
             val input = "3,0,4,0,99"
 
             val expectedResult = listOf(17, 0, 4, 0, 99)

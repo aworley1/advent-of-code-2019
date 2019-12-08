@@ -6,19 +6,23 @@ import java.io.File
 fun main() {
     val program = File("inputs/day7.txt").readLines().first()
 
+    println("Part1: ${part1(program)}")
+}
+
+fun part1(program: String): Int {
     val phases = listOf(0, 1, 2, 3, 4)
 
     val outputsForAllPhasePermutations = Collections2.permutations(phases)
         .map { calculateAmplifierOutput(program, it) }
 
-    println(outputsForAllPhasePermutations.max())
+    return outputsForAllPhasePermutations.max()!!
 }
 
 fun calculateAmplifierOutput(program: String, phases: List<Int>): Int {
-    val outputter = Outputter(mutableListOf(0))
+    val outputter = SimpleOutputter(mutableListOf(0))
 
     for (phase in phases) {
-        val inputter = Inputter(listOf(phase, outputter.output.last()))
+        val inputter = SimpleInputter(listOf(phase, outputter.output.last()))
         compute(program, inputter, outputter)
     }
 
@@ -27,8 +31,8 @@ fun calculateAmplifierOutput(program: String, phases: List<Int>): Int {
 
 fun compute(
     input: List<Int>,
-    reader: Inputter = Inputter(emptyList()),
-    writer: Outputter = Outputter(mutableListOf())
+    reader: Inputter = SimpleInputter(emptyList()),
+    writer: Outputter = SimpleOutputter(mutableListOf())
 ): List<Int> {
     val memory = input.toMutableList()
 
@@ -45,8 +49,8 @@ fun compute(
 
 fun compute(
     input: String,
-    reader: Inputter = Inputter(emptyList()),
-    writer: Outputter = Outputter(mutableListOf())
+    reader: Inputter = SimpleInputter(emptyList()),
+    writer: Outputter = SimpleOutputter(mutableListOf())
 ): List<Int> {
     val program = input.split(",")
         .map { it.toInt() }
