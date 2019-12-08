@@ -2,7 +2,7 @@ package day7
 
 
 data class Operation(
-    val function: (MutableList<Int>) -> Int
+    val function: suspend (MutableList<Int>) -> Int
 )
 
 fun parseOpCode(

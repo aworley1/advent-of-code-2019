@@ -1,6 +1,7 @@
 package day7
 
 import com.google.common.collect.Collections2
+import kotlinx.coroutines.runBlocking
 import java.io.File
 
 fun main() {
@@ -67,7 +68,7 @@ private fun performOperation(
     val operation =
         parseOpCode(index, memory, reader, writer)
 
-    return operation.function(memory)
+    return runBlocking { operation.function(memory) }
 }
 
 fun MutableList<Int>.readFromMemory(locationOfLocationToRead: Int): Int {

@@ -2,9 +2,9 @@ package day7
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import io.mockk.every
+import io.mockk.coEvery
+import io.mockk.coVerify
 import io.mockk.mockk
-import io.mockk.verify
 import org.spekframework.spek2.Spek
 import org.spekframework.spek2.style.specification.describe
 
@@ -44,14 +44,14 @@ object Day7Test : Spek({
 
         it("should perform opcode 3 and 4 instruction") {
             val consoleReader = mockk<SimpleInputter>()
-            every { consoleReader.getInput() } returns 17
+            coEvery { consoleReader.getInput() } returns 17
             val consoleWriter = mockk<SimpleOutputter>(relaxed = true)
             val input = "3,0,4,0,99"
 
             val expectedResult = listOf(17, 0, 4, 0, 99)
 
             assertThat(compute(input, consoleReader, consoleWriter)).isEqualTo(expectedResult)
-            verify { consoleWriter.output(17) }
+            coVerify { consoleWriter.output(17) }
         }
 
         it("should run a program with parameter mode operations") {

@@ -1,11 +1,13 @@
 package day7
 
+import kotlinx.coroutines.channels.Channel
+
 interface Inputter {
-    fun getInput(): Int
+    suspend fun getInput(): Int
 }
 
 interface Outputter {
-    fun output(value: Int)
+    suspend fun output(value: Int)
 }
 
 data class SimpleInputter(val inputs: List<Int>) : Inputter {
@@ -15,12 +17,24 @@ data class SimpleInputter(val inputs: List<Int>) : Inputter {
     init {
         inputIterator = inputs.iterator()
     }
-    override fun getInput() = inputIterator.next()
+    override suspend fun getInput() = inputIterator.next()
 
 }
 
 data class SimpleOutputter(val output: MutableList<Int> = mutableListOf()) : Outputter {
-    override fun output(value: Int) {
+    override suspend fun output(value: Int) {
         output.add(value)
+    }
+}
+
+class ChannelInputter(val channel: Channel<Int>): Inputter {
+    override suspend fun getInput(): Int {
+        return channel.receive()
+    }
+}
+
+class ChannelOutputter(val channel: Channel<Int>): Outputter {
+    override suspend fun output(value: Int) {
+        channel.send(value)
     }
 }
