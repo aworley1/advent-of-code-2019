@@ -29,12 +29,16 @@ data class SimpleOutputter(val output: MutableList<Int> = mutableListOf()) : Out
 
 class ChannelInputter(val channel: Channel<Int>): Inputter {
     override suspend fun getInput(): Int {
-        return channel.receive()
+        println("waiting for input")
+        val value = channel.receive()
+        println ("received $value")
+        return value
     }
 }
 
 class ChannelOutputter(val channel: Channel<Int>): Outputter {
     override suspend fun output(value: Int) {
+        println("sending $value")
         channel.send(value)
     }
 }
