@@ -8,6 +8,7 @@ fun main() {
     val program = File("inputs/day7.txt").readLines().first()
 
     println("Part1: ${part1(program)}")
+    println("Part2: ${part2(program)}")
 }
 
 fun part1(program: String): Int {
